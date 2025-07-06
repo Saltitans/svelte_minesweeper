@@ -14,14 +14,6 @@ class GameHandler {
         this.board = board;
         this.isRunning = true;
     }
-
-    showCell(x: number, y: number): void {
-        this.board[x][y].showCell();
-    }
-
-    flagCell(x: number, y: number): void {
-        this.board[x][y].flagCell();
-    }
 }
 
 
