@@ -21,7 +21,11 @@
 	{oncontextmenu}
 >
 	{#if cell.isVisible}
-		<p>V</p>
+		{#if cell.isBomb}
+			<p>B</p>
+		{:else}
+			<p>{cell.value}</p>
+		{/if}
 	{:else if cell.isFlagged}
 		<p>F</p>
 	{/if}
