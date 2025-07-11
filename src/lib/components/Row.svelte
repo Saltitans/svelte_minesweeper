@@ -8,6 +8,13 @@
 
 <div class="flex flex-row justify-center">
 	{#each row as cell}
-		<Cell {cell} />
+		<Cell
+			x={cell.x}
+			y={cell.y}
+			isVisible={cell.isVisible}
+			isBomb={cell.isBomb}
+			isFlagged={cell.isFlagged}
+			value={cell.value}
+		/>
 	{/each}
 </div>

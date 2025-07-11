@@ -1,16 +1,30 @@
 <script lang="ts">
-	import type { GameCell } from '$lib/state/game_cell.svelte';
+	import { gameHandler } from '$lib/state/game_handler.svelte';
 	import '../../app.css';
 
-	let { cell }: { cell: GameCell } = $props();
+	let {
+		x,
+		y,
+		isVisible,
+		isBomb,
+		isFlagged,
+		value
+	}: {
+		x: number;
+		y: number;
+		isVisible: boolean;
+		isBomb: boolean;
+		isFlagged: boolean;
+		value: number;
+	} = $props();
 
 	function onclick(): void {
-		cell.showCell();
+		gameHandler.showCell(x, y);
 	}
 
 	function oncontextmenu(event: MouseEvent): void {
 		event.preventDefault();
-		cell.flagCell();
+		gameHandler.flagCell(x, y);
 	}
 </script>
 
@@ -20,13 +34,13 @@
 	{onclick}
 	{oncontextmenu}
 >
-	{#if cell.isVisible}
-		{#if cell.isBomb}
+	{#if isVisible}
+		{#if isBomb}
 			<p>B</p>
 		{:else}
-			<p>{cell.value}</p>
+			<p>{value}</p>
 		{/if}
-	{:else if cell.isFlagged}
+	{:else if isFlagged}
 		<p>F</p>
 	{/if}
 </button>
