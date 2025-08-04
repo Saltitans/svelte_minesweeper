@@ -1,46 +1,36 @@
 <script lang="ts">
-	import { gameHandler } from '$lib/state/game_handler.svelte';
 	import '../../app.css';
+	import GameCell from '$lib/state/game_cell.svelte';
 
-	let {
-		x,
-		y,
-		isVisible,
-		isBomb,
-		isFlagged,
-		value
-	}: {
-		x: number;
-		y: number;
-		isVisible: boolean;
-		isBomb: boolean;
-		isFlagged: boolean;
-		value: number;
-	} = $props();
+	let { cell }: { cell: GameCell } = $props();
 
 	function onclick(): void {
-		gameHandler.showCell(x, y);
+		cell.showCell();
 	}
 
 	function oncontextmenu(event: MouseEvent): void {
 		event.preventDefault();
-		gameHandler.flagCell(x, y);
+		cell.flagCell();
 	}
+
+	let bgColor = $derived(
+		cell.isBomb ? 'bg-yellow-900' : cell.value === 0 ? 'bg-yellow-100' : 'bg-yellow-500'
+	);
 </script>
 
 <button
-	class="flex h-10 w-10 items-center justify-center border bg-yellow-500"
+	class="flex h-10 w-10 items-center justify-center border {bgColor}"
 	aria-label="mine button"
 	{onclick}
 	{oncontextmenu}
 >
-	{#if isVisible}
-		{#if isBomb}
+	{#if cell.isVisible}
+		{#if cell.isBomb}
 			<p>B</p>
 		{:else}
-			<p>{value}</p>
+			<p>{cell.value}</p>
 		{/if}
-	{:else if isFlagged}
+	{:else if cell.isFlagged}
 		<p>F</p>
 	{/if}
 </button>

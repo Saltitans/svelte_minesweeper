@@ -1,13 +1,11 @@
-import { GameCell } from "./game_cell.svelte";
+import GameCell from "./game_cell.svelte";
 
 class GameHandler {
-    _isRunning: boolean = $state(false);
-    _board: GameCell[][] = $state([]);
+    isRunning: boolean = $state(false);
     _boardSize: number = -1;
+    board: GameCell[][] = $state([]);
 
     initializeBoard(size: number): void {
-        this._boardSize = size;
-
         let nBombs = Math.round((size * size) * 0.2);
         let bombs: number[][] = [];
         while (bombs.length < nBombs) {
@@ -31,14 +29,11 @@ class GameHandler {
                 }),
         );
 
-        this._board = board;
-        this._isRunning = true;
+        this.isRunning = true;
+        this._boardSize = size;
+        this.board = board;
     }
 
-    // [
-    //     [1, 1],
-    //     [1, B]
-    // ]
     _getCellValue(x: number, y: number, boardSize: number, bombs: number[][]): number {
         let value = 0;
         if (x > 0) {
@@ -84,55 +79,44 @@ class GameHandler {
         return value;
     }
 
-    get isRunning(): boolean {
-        return this._isRunning;
-    }
-
-    get board(): GameCell[][] {
-        return this._board;
-    }
-
-    showCell(x: number, y: number): void {
-        let cell = this._board[x][y];
-        if (cell.value === 0)
-            this._displayAdjacentCells(x, y);
-        else
-            cell.showCell();
-    }
 
     flagCell(x: number, y: number): void {
-        let cell = this._board[x][y];
+        let cell = this.board[x][y];
         cell.flagCell();
     }
 
-    _displayAdjacentCells(x: number, y: number): void {
-        let cell = this._board[x][y];
+    _displayAdjacentCells(cell: null | GameCell, previousCell: GameCell): void {
+        if (cell === null) {
+            if (previousCell.value !== 0) return;
+        } else {
+            if (!cell.canShow()) return;
+            if (previousCell.value !== 0) return;
+        }
 
-        if (cell.value !== 0 || cell.isFlagged) return;
-        if (cell.isVisible) return;
+        let effectiveCell = cell ?? previousCell;
 
-        cell.showCell();
+        effectiveCell.showCell();
 
-        if (x > 0) this._displayAdjacentCells(x - 1, y);
+        if (effectiveCell.x > 0) this._displayAdjacentCells(this.board[effectiveCell.x - 1][effectiveCell.y], effectiveCell);
 
-        if (x > 0 && y < this._boardSize - 1) this._displayAdjacentCells(x - 1, y + 1);
+        if (effectiveCell.x > 0 && effectiveCell.y < this._boardSize - 1) this._displayAdjacentCells(this.board[effectiveCell.x - 1][effectiveCell.y + 1], effectiveCell);
 
-        if (y < this._boardSize - 1) this._displayAdjacentCells(x, y + 1);
+        if (effectiveCell.y < this._boardSize - 1) this._displayAdjacentCells(this.board[effectiveCell.x][effectiveCell.y + 1], effectiveCell);
 
-        if (x < this._boardSize - 1 && y < this._boardSize - 1) this._displayAdjacentCells(x + 1, y + 1);
+        if (effectiveCell.x < this._boardSize - 1 && effectiveCell.y < this._boardSize - 1) this._displayAdjacentCells(this.board[effectiveCell.x + 1][effectiveCell.y + 1], effectiveCell);
 
-        if (x < this._boardSize - 1) this._displayAdjacentCells(x + 1, y);
+        if (effectiveCell.x < this._boardSize - 1) this._displayAdjacentCells(this.board[effectiveCell.x + 1][effectiveCell.y], effectiveCell);
 
-        if (x < this._boardSize - 1 && y > 0) this._displayAdjacentCells(x + 1, y - 1);
+        if (effectiveCell.x < this._boardSize - 1 && effectiveCell.y > 0) this._displayAdjacentCells(this.board[effectiveCell.x + 1][effectiveCell.y - 1], effectiveCell);
 
-        if (y > 0) this._displayAdjacentCells(x, y - 1)
+        if (effectiveCell.y > 0) this._displayAdjacentCells(this.board[effectiveCell.x][effectiveCell.y - 1], effectiveCell)
 
-        if (x > 0 && y > 0) this._displayAdjacentCells(x - 1, y - 1)
+        if (effectiveCell.x > 0 && effectiveCell.y > 0) this._displayAdjacentCells(this.board[effectiveCell.x - 1][effectiveCell.y - 1], effectiveCell)
     }
 }
 
 
 let gameHandler = new GameHandler();
-export { gameHandler };
+export default gameHandler;
 
 

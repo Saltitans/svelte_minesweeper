@@ -1,39 +1,34 @@
-export class GameCell {
+class GameCell {
     x: number = 0;
     y: number = 0;
     value: number = 0;
-    _isBomb: boolean = $state(false);
-    _isVisible: boolean = $state(false);
-    _isFlagged: boolean = $state(false);
-    onShowCallback: (x: number, y: number) => void;
+    isBomb: boolean = $state(false);
+    isVisible: boolean = $state(false);
+    isFlagged: boolean = $state(false);
+    _onShowCallback: (cell: null | GameCell, startingCell: GameCell) => void;
 
-    constructor(x: number, y: number, value: number, isBomb: boolean, onShowCallback: (x: number, y: number) => void) {
+    constructor(x: number, y: number, value: number, isBomb: boolean, onShowCallback: (cell: null | GameCell, startingCell: GameCell) => void) {
         this.x = x;
         this.y = y;
         this.value = value;
-        this._isBomb = isBomb;
-        this.onShowCallback = onShowCallback;
-    }
-
-    get isBomb(): boolean {
-        return this._isBomb;
-    }
-
-    get isVisible(): boolean {
-        return this._isVisible;
-    }
-
-    get isFlagged(): boolean {
-        return this._isFlagged;
+        this.isBomb = isBomb;
+        this._onShowCallback = onShowCallback;
     }
 
     showCell(): void {
-        if (this._isVisible || this._isFlagged) return;
-        this._isVisible = !this._isVisible;
+        if (!this.canShow()) return;
+        this.isVisible = !this.isVisible;
+        this._onShowCallback(null, this);
+    }
+
+    canShow(): boolean {
+        return !this.isVisible && !this.isFlagged;
     }
 
     flagCell(): void {
-        if (this._isVisible) return;
-        this._isFlagged = !this._isFlagged;
+        if (this.isVisible) return;
+        this.isFlagged = !this.isFlagged;
     }
 }
+
+export default GameCell;

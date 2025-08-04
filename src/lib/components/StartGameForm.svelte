@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { gameHandler } from '$lib/state/game_handler.svelte';
+	import gameHandler from '$lib/state/game_handler.svelte';
 	import Spacer from './Spacer.svelte';
 
 	let boardSize = $state(1);
