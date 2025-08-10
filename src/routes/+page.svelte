@@ -9,13 +9,11 @@
 <div class="flex h-screen w-screen flex-col justify-center">
 	<StartGameForm />
 	<Spacer height={1}></Spacer>
-	{#if gameHandler.isRunning}
-		{#each gameHandler.board as row}
-			<div class="flex flex-row justify-center">
-				{#each row as cell}
-					<Cell {cell} />
-				{/each}
-			</div>
-		{/each}
-	{/if}
+	{#each gameHandler.board as row}
+		<div class="flex flex-row justify-center">
+			{#each row as cell}
+				<Cell {cell} />
+			{/each}
+		</div>
+	{/each}
 </div>

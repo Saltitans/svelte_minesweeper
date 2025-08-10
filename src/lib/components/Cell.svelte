@@ -1,6 +1,7 @@
 <script lang="ts">
 	import '../../app.css';
 	import GameCell from '$lib/state/game_cell.svelte';
+	import gameHandler from '$lib/state/game_handler.svelte';
 
 	let { cell }: { cell: GameCell } = $props();
 
@@ -13,16 +14,19 @@
 		cell.flagCell();
 	}
 
-	let bgColor = $derived(
-		cell.isBomb ? 'bg-yellow-900' : cell.value === 0 ? 'bg-yellow-100' : 'bg-yellow-500'
-	);
+	let isDisabled = $derived(!gameHandler.isRunning);
 </script>
 
 <button
-	class="flex h-10 w-10 items-center justify-center border {bgColor}"
+	class="flex h-10 w-10 items-center justify-center border {cell.isBomb
+		? 'bg-yellow-900'
+		: cell.value === 0
+			? 'bg-yellow-100'
+			: 'bg-yellow-500'}"
 	aria-label="mine button"
 	{onclick}
 	{oncontextmenu}
+	disabled={isDisabled}
 >
 	{#if cell.isVisible}
 		{#if cell.isBomb}
