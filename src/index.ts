@@ -1,3 +1,3 @@
-import StartGameForm from "./StartGameForm.svelte";
+import Minesweeper from "./lib/components/Minesweeper.svelte";
 
-export { StartGameForm };
+export { Minesweeper };

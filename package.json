@@ -20,7 +20,7 @@
 	"exports": {
 		".": {
 			"types": "./src/index.d.ts",
-			"svelte": "./src/index.js"
+			"svelte": "./src/index.ts"
 		}
 	},
 	"peerDependencies": {
