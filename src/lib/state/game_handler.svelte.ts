@@ -1,4 +1,4 @@
-import GameCell from "./game_cell.svelte";
+import GameCell from "./game_cell.svelte.ts";
 
 class GameHandler {
     isRunning: boolean = $state(false);
