@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '../../app.css';
-	import GameCell from '$lib/state/game_cell.svelte';
-	import gameHandler from '$lib/state/game_handler.svelte';
+	import GameCell from '../state/game_cell.svelte';
+	import gameHandler from '../state/game_handler.svelte';
 
 	let { cell }: { cell: GameCell } = $props();
 
