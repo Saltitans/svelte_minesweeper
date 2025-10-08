@@ -1,5 +1,5 @@
 <script lang="ts">
-	import '../../app.css';
+	import '../app.css';
 	import gameHandler from '../state/game_handler.svelte';
 	import Spacer from './Spacer.svelte';
 	import StartGameForm from './StartGameForm.svelte';

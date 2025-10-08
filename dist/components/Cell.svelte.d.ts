@@ -1,4 +1,4 @@
-import '../../app.css';
+import '../app.css';
 import GameCell from '../state/game_cell.svelte';
 type $$ComponentProps = {
     cell: GameCell;
