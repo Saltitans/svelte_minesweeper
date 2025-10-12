@@ -1,5 +1,5 @@
 <script lang="ts">
-	import '../../app.css';
+	import '../app.css';
 	import GameCell from '../state/game_cell.svelte';
 	import gameHandler from '../state/game_handler.svelte';
 

@@ -3,7 +3,7 @@
 	"version": "0.0.1",
 	"scripts": {
 		"dev": "vite dev --open",
-		"build": "vite build && npm run prepack && npx @tailwindcss/cli -i ./src/app.css -o ./dist/app.css",
+		"build": "vite build && npm run prepack && npx @tailwindcss/cli -i ./src/lib/app.css -o ./dist/app.css",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"prepack": "svelte-kit sync && svelte-package && publint",
