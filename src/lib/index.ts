@@ -1,3 +1,3 @@
-import Minesweeper from "$lib/components/Minesweeper.svelte";
+import Minesweeper from "./components/Minesweeper.svelte";
 
 export default Minesweeper;
