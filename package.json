@@ -1,6 +1,6 @@
 {
 	"name": "svelte-minesweeper",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"scripts": {
 		"dev": "vite dev --open",
 		"build": "vite build && npm run prepack && npx @tailwindcss/cli -i ./src/lib/app.css -o ./dist/app.css",
